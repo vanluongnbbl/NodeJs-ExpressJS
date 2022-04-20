@@ -30,7 +30,9 @@
   "dependencies": {
     "express": "^4.17.3",
     "express-handlebars": "^6.0.4",
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "mongoose": "^6.3.0",
+    "mongoose-slug-generator": "^1.0.4"
   },
   "devDependencies": {
     "lint-staged": "^12.3.8",
