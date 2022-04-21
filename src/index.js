@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const hbs = require('express-handlebars');
 const path = require('path');   
+const methodOverride = require('method-override')
 
 const route = require('./routes');
 const db = require('./config/db')
@@ -21,11 +22,17 @@ app.use(
 ); // htmp request
 app.use(express.json()); // XMLHttpRequest, fetch, axios
 
+// override with the X-HTTP-Method-Override header in the request
+app.use(methodOverride('_method'))
+
 // Template engine
 app.engine(
     'hbs',
     hbs.engine({
         extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b
+        }
     }),
 );
 app.set('view engine', 'hbs');

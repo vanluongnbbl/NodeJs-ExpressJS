@@ -6,7 +6,13 @@ class MeController {
 
     // [GET] /me/stored/courses 
     storedCourses(req, res, next) {
-        res.render('me/stored-courses')
+        Course.find({})
+            .then(courses => {
+                res.render('me/stored-courses', {
+                    courses: multipleMongooseToObject(courses)
+                })
+            })
+            .catch(next)
     }
 
 }

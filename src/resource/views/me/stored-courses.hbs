@@ -1,1 +1,80 @@
-<h1>aaa</h1>
+<div class="mt-4">
+    <h3>My Courses</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created At</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {{#each courses}}
+
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/courses/{{this._id}}/edit" class="btn btn-link">Edit</a>
+                    <button class="btn btn-link" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                </td>
+
+            </tr>
+           
+        {{/each}}
+         
+        </tbody>
+    </table>
+</div>
+
+
+
+{{!-- Confirm modal --}}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="btn-delete-course" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form method="POST" name="delete-course-form">
+</form>
+
+
+<script>
+    let exampleModal = document.getElementById('exampleModal')
+    let deleteForm = document.forms['delete-course-form']
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        let button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        let idCourse = button.getAttribute('data-id')
+        // If necessary, you could initiate an AJAX request here
+        // and then do the updating in a callback.
+        //
+        // Update the modal's content.
+        let btnDeteleCourse = document.getElementById('btn-delete-course')
+        btnDeteleCourse.onclick = function () {
+            deleteForm.setAttribute("action", `/courses/${idCourse}?_method=DELETE`)
+            deleteForm.submit()
+        }
+    })
+</script>
